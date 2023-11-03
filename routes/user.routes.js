@@ -2,6 +2,7 @@ import { Router } from "express";
 import usercontroller from "../controllers/user.controller.js";
 import authenticated from "../middlewares/authenticated.middleware.js";
 
+
 const userRouter = Router();
 
 userRouter.get("/clients", authenticated ,usercontroller.getAllClients);

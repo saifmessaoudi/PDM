@@ -26,26 +26,31 @@ const signUp = async (req, res) => {
     }
 };
 
+
 /*-------------------------------------------Login-------------------------------------------*/
 const signIn = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(400).json({ message: "Please verify your email !" });
+     console.log("email");
+       return res.status(400).json({ message: "Please verify your email !" });
     }
     if (user.isBanned === true) {
-      return res.status(400).json({ message: "Your account is banned ! Please contact the support." });
+      console.log("banned");
+       return res.status(400).json({ message: "Your account is banned ! Please contact the support." });
     }
     if (user){
       const validPassword = await bcrypt.compare(req.body.password, user.password);
       if (!validPassword) {
+        console.log("password");
         return res.status(400).json({ message: "Please verify your password !" });
       }
     }
     const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET);
+    console.log(token);
     res.status(200).json({token});
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json(error.message);
   }
 };
 
