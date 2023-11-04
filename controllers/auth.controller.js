@@ -46,7 +46,9 @@ const signIn = async (req, res) => {
         return res.status(400).json({ message: "Please verify your password !" });
       }
     }
-    const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET);
+    
+    const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET, { expiresIn: "30m" });
+    
     console.log(token);
     res.status(200).json({token});
   } catch (error) {

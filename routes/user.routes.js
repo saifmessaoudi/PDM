@@ -5,7 +5,21 @@ import authenticated from "../middlewares/authenticated.middleware.js";
 
 const userRouter = Router();
 
-userRouter.get("/clients", authenticated ,usercontroller.getAllClients);
+/**
+ * @swagger
+ * /user/clients:
+ *   get:  
+ *     summary: Get All Clients
+ *     description: Get All Clients
+ *     tags:
+ *       - User
+ *     responses:
+ *       200:
+ *         description: Clients
+ *       401:
+ *         description: Unauthorized, incorrect credentials
+ */
+userRouter.get("/clients" ,usercontroller.getAllClients);
 userRouter.get("/medecins", authenticated ,usercontroller.getAllMedecins);
 userRouter.get("/client/:id", authenticated ,usercontroller.getClientById);
 userRouter.get("/medecin/:id", authenticated ,usercontroller.getMedecinById);
