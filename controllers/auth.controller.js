@@ -129,7 +129,12 @@ const resetPassword = async (req, res) => {
   }
 };
 
- 
+const signInWithGoogle = async (req, res) => {
+   const user = req.user;
+   const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET, { expiresIn: "30m" });
+   res.status(200).json({token}); 
+
+};
 /*-------------------------------------------Export-------------------------------------------*/
 export default { 
   signUp, 
@@ -137,6 +142,7 @@ export default {
   forgotPassword,
   resendEmailVerification,
   verifEmail,
-  resetPassword
+  resetPassword,
+  signInWithGoogle
 };
 

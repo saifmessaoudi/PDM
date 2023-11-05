@@ -3,6 +3,8 @@ import authcontroller  from "../controllers/auth.controller.js";
 import authenticated from "../middlewares/authenticated.middleware.js";
 import validatorMiddleware from "../middlewares/validator.middleware.js";
 import userSignupValidator from "../validators/auth.user.validator.js";
+import passport from "passport";
+import jwt from "jsonwebtoken";
 
 
 const authRouter = Router();
@@ -76,6 +78,18 @@ authRouter.post("/signin", authcontroller.signIn);
 authRouter.post("/forgot-password", authcontroller.forgotPassword);
 authRouter.post("/send-email-verification",authenticated ,authcontroller.resendEmailVerification);
 authRouter.get("/verify-email/:token",authenticated, authcontroller.verifEmail);
+
+authRouter.get(
+    "/google",
+    passport.authenticate("google", { scope: ["profile", "email"] })
+)
+
+authRouter.get(
+    "/google/callback",
+    passport.authenticate("google", { failureRedirect: "/auth/signin" }),
+    authcontroller.signInWithGoogle
+);
+
 
 
 export default authRouter;

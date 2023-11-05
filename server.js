@@ -7,12 +7,20 @@ import adminRouter from "./routes/admin.routes.js";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swaggerDefinition.js";
+import passport from "passport";
+import "./config/passportConfig.js";
+import session from "express-session";
+
+
 dotenv.config();
 
 const hostname = process.env.HOSTNAME ;
 const port = process.env.PORT ;
 
 const app = express();
+app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
+
+
 connectDB();
 
 app.use(express.json());
