@@ -4,6 +4,8 @@ import connectDB from "./config/connectDB.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
+import alimentRouter from "./routes/aliment.routes.js";
+
 import cors from "cors";
 dotenv.config();
 
@@ -17,6 +19,7 @@ app.use(express.json());
 
 app.use(cors());
 
+app.use("/aliments",alimentRouter)
 app.use("/admin",adminRouter)
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
