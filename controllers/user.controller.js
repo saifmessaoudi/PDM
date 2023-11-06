@@ -6,6 +6,20 @@ const User = usermodel.User;
 
 /*----------------------------------- GET --------------------------------------- */
 
+const getCurrentUser = async (req, res) => {
+    try {
+       if (!req.header("Authorization")) return res.status(401).json({ message: "Unauthorized" });
+        const token = req.header("Authorization").split(" ")[1];
+        const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decodedToken.userId).select("-password ");
+        if (!user) return res.status(404).json({ message: "User not found" });
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+};
+
+
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find().select("-password");
@@ -161,7 +175,8 @@ export default {
     updateUser,
     addRemoveFavorite,
     getFavorites,
-    searchUser
+    searchUser,
+    getCurrentUser
 };
 
 

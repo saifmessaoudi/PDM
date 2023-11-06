@@ -12,26 +12,25 @@ const userSchema = mongoose.Schema(
         picture : {type: String, default: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"},
         gender: { type: String, enum: ["homme", "femme"], default: "homme" },
         phone : {type: String, maxLength:11 ,required: true},
+        height : {type: Number},
+        weight : {type: Number},
         location: {type: String},
         favorites :{type: Array, default: []},
         isVerified: { type: Boolean, default: false },
         isBanned: { type: Boolean, default: false },
         passwordResetToken: { type: String },
+        speciality: { type: String},
+        description: { type: String },
+        disponibility: { type: String},
+        rating: { type: Number, default: 0 },
+        patients: { type: Array, default: [] }, 
+        rendezVous: { type: Array, default: [] },
     },
     { timestamps: true}
 ); 
 
-const medecinSchema = userSchema.clone();
-medecinSchema.add({
-    speciality: { type: String, required: true },
-    description: { type: String, required: true },
-    disponibility: { type: String, required: true },
-    rating: { type: Number, default: 0 },
-    patients: { type: Array, default: [] }, 
-    rendezVous: { type: Array, default: [] },
-}); 
 
 const User = mongoose.model("User", userSchema);
-const Medecin = mongoose.model("Medecin", medecinSchema);
 
-export default { User, Medecin };
+
+export default { User };
