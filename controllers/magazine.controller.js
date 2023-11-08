@@ -27,11 +27,12 @@ const getAllMagazines = async (req, res) => {
 
 const createMagazine = async (req, res) => {
   try {
-    const {   titre ,nom, prenom, date,  email, typemagazine, description } = req.body;
+    const {   titre ,nom, prenom ,video, date,  email, typemagazine, description } = req.body;
     const newMagazine = new Magazine({
       titre,  
       nom,
       prenom,
+      video,
       date ,
       email,
       typemagazine,
