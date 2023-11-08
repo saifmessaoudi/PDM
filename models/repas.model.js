@@ -2,13 +2,15 @@ import mongoose from "mongoose";
 
 const repasSchema = mongoose.Schema(
     {
-        nomRepas: { type: String, required: true },
-        descriptionRepas: { type: String, required: true },
-        aliments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Aliment", required: true }],
-        calories: { type: Number, required: true },
-        carbs: { type: Number, required: true },
-        proteines: { type: Number, required: true },
-        fats: { type: Number, required: true },
+        repasName: { type: String, required: true },
+        repasDescription: { type: String, required: true },
+        aliments: {type: Array, default: []},
+        calories: { type: Number },
+        carbs: { type: Number},
+        proteines: { type: Number },
+        fats: { type: Number},
+        confidentiality: { type: String, enum: ["public", "prive"], default: "public"},
+        owner: { type: String},
     },
     { timestamps: true }
 );
