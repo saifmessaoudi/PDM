@@ -77,6 +77,44 @@ authRouter.post("/signup", validatorMiddleware(userSignupValidator), authcontrol
 authRouter.post("/signin", authcontroller.signIn);
 authRouter.post("/forgot-password", authcontroller.forgotPassword);
 authRouter.post("/send-email-verification",authenticated ,authcontroller.resendEmailVerification);
+
+/**
+ * @swagger
+ * /auth/reset-password/{id}:
+ *   post:
+ *     summary: Reset Password
+ *     description: Reset Password
+ *     tags:
+ *       - Authentication
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: User Id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               randomCode:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - randomCode
+ *               - password
+ *     responses:
+ *       200:
+ *         description: Password reset successfully
+ *       400:
+ *         description: Unauthorized, incorrect credentials
+ *       404:
+ *         description: User not found
+ *
+ */
+authRouter.post("/reset-password/:id", authcontroller.resetPassword);
 authRouter.get("/verify-email/:token",authenticated, authcontroller.verifEmail);
 
 authRouter.get(
