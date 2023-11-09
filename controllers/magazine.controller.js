@@ -27,24 +27,13 @@ const getAllMagazines = async (req, res) => {
 
 const createMagazine = async (req, res) => {
   try {
-    const {   titre ,nom, prenom ,video, date,  email, typemagazine, description } = req.body;
-    const newMagazine = new Magazine({
-      titre,  
-      nom,
-      prenom,
-      video,
-      date ,
-      email,
-      typemagazine,
-      description,
-     
-    });
-    const savedMagazine= await newMagazine.save();
-    res.status(201).json(savedMagazine);
+    await Magazine.create(req.body);
+    res.status(201).json("done");
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 
 

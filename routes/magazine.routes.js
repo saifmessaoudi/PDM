@@ -1,3 +1,4 @@
+import { Router } from "express";
 import magazineController from "../controllers/magazine.controller.js";
 
 const magazineRouter = Router();

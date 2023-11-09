@@ -6,6 +6,7 @@ import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import cors from "cors";
 import reclamationRouter  from "./routes/reclamation.routes.js";
+import magazineRouter from "./routes/magazine.routes.js";
 dotenv.config();
 
 const hostname = process.env.HOSTNAME ;
@@ -22,6 +23,7 @@ app.use("/admin",adminRouter)
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use("/reclamation",reclamationRouter);
+app.use("/magazine",magazineRouter);
 
 app.listen(port, hostname,() => {
     console.log(`Server running at http://${hostname}:${port}/`);
