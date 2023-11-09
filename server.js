@@ -10,6 +10,8 @@ import  coursrouter from "./routes/cours.routes.js"
 
 
 
+import pharmacyRoutes from './routes/pharmacie.routes.js'; // Adjust the path based on your project structure
+
 import cors from "cors";
 import reclamationRouter  from "./routes/reclamation.routes.js";
 import swaggerUi from "swagger-ui-express";
@@ -38,6 +40,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/admin",adminRouter)
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use('/pharmacie', pharmacyRoutes);
+
 app.use("/exercice", exercicesrouter)
 app.use("/cours", coursrouter)
 
