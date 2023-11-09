@@ -41,12 +41,8 @@ app.use("/auth", authRouter);
 app.use("/user", userRouter);
 app.use('/pharmacie', pharmacyRoutes);
 app.use('/medicament',medicamentRoutes);
-
-
 app.use("/exercice", exercicesrouter)
 app.use("/cours", coursrouter)
-
-
 app.use("/reclamation",reclamationRouter);
 
 
