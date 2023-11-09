@@ -17,8 +17,8 @@ const getAllPharmacies = async (req, res) => {
 const getPharmacieById = async (req, res) => {
     const { id } = req.params;
     try {
-        const user = await pharmacie.findById(id).select("-password");
-        if (user === null) {
+        const pharmacie = await pharmacie.findById(id).select("-password");
+        if (pharmacie === null) {
             return res.status(400).json( "No pharmacy found" );
         }
         res.status(200).json(user);
