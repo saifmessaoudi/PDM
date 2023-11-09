@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import medicamentsModel from "../models/medicaments.model"; 
+import medicamentsModel from "../models/medicaments.model.js"; 
 
 
 const getAllMedicaments = async (req, res) => {
