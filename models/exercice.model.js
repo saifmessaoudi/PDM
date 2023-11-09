@@ -1,16 +1,14 @@
 import mongoose from "mongoose";
 
-const exerciceshema = mongoose.Schema(
-    {
-        picture: { type: String, required: true },
-        exercicetitle: { type: String, required: true },
-        exerciceCategorie: { type: String, enum: ["cardio", "squats", "natation", "fentes", "montées de genoux"], required: true },
-        calories: { type: Number, required: true },
-        description: { type: String, required: true },
-    },
-    { timestamps: true }
-);
+const exerciceSchema = new mongoose.Schema({
+  nom: { type: String, required: true },
+  description: { type: String, required: true },
+  duree: { type: String, required: true },
+  niveau_difficulte: { type: String, required: true },
+  image: { type: String, required: true },
+  date: { type: Date, required: true }
+});
 
-const exercice  = mongoose.model("Exercice", exerciceshema);
+const Exercice = mongoose.model('exercice', exerciceSchema);
 
-export default exercice;
+export default  Exercice ;
