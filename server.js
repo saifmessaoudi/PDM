@@ -5,6 +5,7 @@ import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import cors from "cors";
+import reclamationRouter  from "./routes/reclamation.routes.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swaggerDefinition.js";
 import passport from "passport";
@@ -31,6 +32,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/admin",adminRouter)
 app.use("/auth", authRouter);
 app.use("/user", userRouter);
+app.use("/reclamation",reclamationRouter);
 
 app.listen(port, hostname,() => {
     console.log(`Server running at http://${hostname}:${port}/`);
