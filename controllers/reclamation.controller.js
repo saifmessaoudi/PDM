@@ -15,7 +15,7 @@ const getReclamationById = async (req, res) => {
 
 const getAllReclamations = async (req, res) => {
   try {
-    const reclamations = await Reclamtion.find();
+    const reclamations = await Reclamation.find();
     if (reclamations.length === 0) {
       return res.status(400).json("reclamation introuvalble");
     }
@@ -39,7 +39,7 @@ const updateReclamation = async (req, res) => {
   try {
     const { id } = req.params;
     const { nom,  prenom,  email, description } = req.body;
-    const updatedReclamation = await Reclamtion.findByIdAndUpdate(
+    const updatedReclamation = await Reclamation.findByIdAndUpdate(
       id,
       { nom,  prenom,  email,  description},
       { new: true }
@@ -70,16 +70,16 @@ const deleteReclamation = async (req, res) => {
   const getReclamationsBynom = async (req, res) => {
     try {
       const { name } = req.params;
-      const reclamation = await reclamation.find({$or: [
+      const reclamation = await Reclamation.find({$or: [
         { nom: { $regex: `^${name}`, $options: "i" } }
 
       ],}
         
       );
-      if (reclamations.length === 0) {
+      if (reclamation.length === 0) {
         return res.status(400).json("No reclamation found in the given name");
       }
-      res.status(200).json(reclamations);
+      res.status(200).json(reclamation);
     } catch (error) {
       res.status(404).json({ message: error.message });
     }
