@@ -14,6 +14,7 @@ const getAllPharmacies = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
 const getPharmacieById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -26,6 +27,7 @@ const getPharmacieById = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
 };
+
 const updatePharmacie = async (req, res) => {
     const { id } = req.params;
     const { Name,dispo , type, phone,longtitude,lantitude,email } = req.body;
@@ -34,6 +36,7 @@ const updatePharmacie = async (req, res) => {
     await pharmacie.findByIdAndUpdate(id, updatePharmacie, { new: true });
     res.json(updatePharmacie);
 };
+
 const addPharmacie = async (req, res) => {
     try {
       
@@ -50,6 +53,7 @@ const addPharmacie = async (req, res) => {
         res.status(400).json(error.message);
    }
 };
+
 const deletePharmacie = async (req, res) => {
     const { id } = req.params;
     

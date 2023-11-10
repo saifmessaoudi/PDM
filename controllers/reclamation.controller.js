@@ -37,10 +37,10 @@ const createReclamation = async (req, res) => {
 
 const updateReclamation = async (req, res) => {
   try {
-    const { id } = req.params;
+    const  id  = req.params.id;
     const { nom,  prenom,  email, description } = req.body;
     const updatedReclamation = await Reclamation.findByIdAndUpdate(
-      id,
+      {_id:id},
       { nom,  prenom,  email,  description},
       { new: true }
     );
@@ -69,7 +69,7 @@ const deleteReclamation = async (req, res) => {
 
   const getReclamationsBynom = async (req, res) => {
     try {
-      const { name } = req.params;
+      const  name = req.params.nom;
       const reclamation = await Reclamation.find({$or: [
         { nom: { $regex: `^${name}`, $options: "i" } }
 

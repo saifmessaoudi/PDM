@@ -8,15 +8,11 @@ const pharmacieSchema = mongoose.Schema(
         longtitude: { type: Number, required: false },
         lantitude:{ type: Number, required: false },
         email:{ type: String, required: false },
-
-        
-       
-
-
        
     },
-
-    
+    {
+        timestamps: true,
+    }
 ); 
 const pharmacie = mongoose.model("Pharmacie", pharmacieSchema);
 export default {pharmacie}

@@ -27,20 +27,9 @@ const getAllMagazines = async (req, res) => {
 
 const createMagazine = async (req, res) => {
   try {
-    const {   titre ,nom, prenom ,video, date,  email, typemagazine, description } = req.body;
-    const newMagazine = new Magazine({
-      titre,  
-      nom,
-      prenom,
-      video,
-      date ,
-      email,
-      typemagazine,
-      description,
-     
-    });
-    const savedMagazine= await newMagazine.save();
-    res.status(201).json(savedMagazine);
+    const newMagazine = new Magazine(req.body);
+    await newMagazine.save();
+    res.status(201).json(newMagazine);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -64,17 +53,16 @@ const deleteMagazine = async (req, res) => {
 
   const getMagazinesBynom = async (req, res) => {
     try {
-      const { name } = req.params;
-      const magazine = await magazine.find({$or: [
+      const  name  = req.params.nom;      
+      const magazine = await Magazine.find({$or: [
         { nom: { $regex: `^${name}`, $options: "i" } }
 
       ],}
-        
       );
-      if (magazines.length === 0) {
-        return res.status(400).json("No Magazine found in the given name");
+      if (magazine.length === 0) {
+         res.status(400).json("No Magazine found in the given name");
       }
-      res.status(200).json(magazines);
+      res.status(200).json(magazine);
     } catch (error) {
       res.status(404).json({ message: error.message });
     }

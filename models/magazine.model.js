@@ -6,13 +6,9 @@ const magazineSchema = mongoose.Schema(
         titre: { type: String, required: true },
         nom: { type: String, required: true },
         prenom: { type: String, required: true },
-        video:{type:String,required: true },
-        date: { type: Date, required: true },
-        email: { type: String, required: true },
-       typemagazine: { type: String, enum: ["sport", "nutrution","medical" ], required: true },
+        videoUrl:{type:String,required: true },
+       typeMagazine: { type: String, enum: ["sport", "nutrution","medical" ], required: true },
        description: { type: String, required: true },
-
-       
     },
     { timestamps: true }
 );

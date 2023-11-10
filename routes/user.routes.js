@@ -65,8 +65,6 @@ userRouter.get("/get-current-user" ,authenticated,usercontroller.getCurrentUser)
  * /user/client/{id}:
  *   get:
  *     summary: Get Client By Id
- *     security:
- *      - bearerAuth: []
  *     description: Get Client By Id
  *     tags:
  *       - User
@@ -81,7 +79,8 @@ userRouter.get("/get-current-user" ,authenticated,usercontroller.getCurrentUser)
  *       401:
  *         description: Unauthorized, incorrect credentials
  */     
-userRouter.get("/client/:id", authenticated ,usercontroller.getClientById);
+userRouter.get("/client/:id" ,usercontroller.getClientById);
+
 /**
  * @swagger
  * /user/medecin/{id}:
@@ -98,7 +97,7 @@ userRouter.get("/client/:id", authenticated ,usercontroller.getClientById);
  *         required: true
  *         description: Medecin Id
  *     responses:
- *       200:
+ *       200:   
  *         description: Medecin
  *       401:
  *         description: Unauthorized, incorrect credentials

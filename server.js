@@ -17,6 +17,7 @@ import swaggerSpec from "./config/swaggerDefinition.js";
 import passport from "passport";
 import "./config/passportConfig.js";
 import session from "express-session";
+import magazineRouter from "./routes/magazine.routes.js";
 
 
 dotenv.config();
@@ -42,7 +43,8 @@ app.use("/user", userRouter);
 app.use('/pharmacie', pharmacyRoutes);
 app.use('/medicament',medicamentRoutes);
 app.use("/exercice", exercicesrouter)
-app.use("/cours", coursrouter)
+app.use("/cours", coursrouter);
+app.use("/magazine",magazineRouter);
 app.use("/reclamation",reclamationRouter);
 
 
