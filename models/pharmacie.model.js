@@ -19,4 +19,4 @@ const pharmacieSchema = mongoose.Schema(
     
 ); 
 const pharmacie = mongoose.model("Pharmacie", pharmacieSchema);
-export default {pharmacie}
+export default pharmacie
