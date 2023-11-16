@@ -81,7 +81,7 @@ const searchPharmaciesByName = async (req, res) => {
 
 const getNightPharmacies = async (req, res) => {
     try {
-        const nightPharmacies = await pharmacie.find({ type: "nuit" }).select("-password");
+        const nightPharmacies = await pharmacie.find({ type: "Pharmacie de nuit" }).select("-password");
         
         if (nightPharmacies.length === 0) {
             return res.status(400).json("No night pharmacies found");
@@ -96,7 +96,7 @@ const getNightPharmacies = async (req, res) => {
 const getDayPharmacies = async (req, res) => {
     try {
         // Recherchez les pharmacies de jour en fonction de votre critère de filtrage (par exemple, le champ "dispo" indique la disponibilité de jour)
-        const dayPharmacies = await pharmacie.find({ type: "jour" }).select("-password");
+        const dayPharmacies = await pharmacie.find({ type: "Pharmacie de jour" }).select("-password");
         
         if (dayPharmacies.length === 0) {
             return res.status(400).json("No day pharmacies found");

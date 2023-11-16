@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import medicament from "../models/medicaments.model.js"; 
+import medicament from "../models/medicament.model.js"; 
 
 
 const getAllMedicaments = async (req, res) => {
@@ -8,7 +8,7 @@ const getAllMedicaments = async (req, res) => {
         const medicaments = await medicament.find().select("-password");
 
         if (medicaments.length === 0) {
-            return res.status(404).json("No pharmacies found");
+            return res.status(404).json("No medicaments found");
         }
 
         res.status(200).json(medicaments);
@@ -33,11 +33,11 @@ const deleteMedicament = async (req, res) => {
 const getMedicamentById = async (req, res) => {
     const { id } = req.params;
     try {
-        const medicamentsModel = await medicamentsModel.findById(id).select("-password");
-        if (medicamentsModel === null) {
-            return res.status(400).json( "No medicament found" );
+        const medicaments = await medicament.findById(id).select("-password");
+        if (medicaments === null) {
+            return res.status(400).json( "No Medicament found" );
         }
-        res.status(200).json(medicamentsModel);
+        res.status(200).json(medicaments);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -52,20 +52,13 @@ const updateMedicament = async (req, res) => {
 };
 const addMedicament = async (req, res) => {
     try {
-      
-       const existingMedicament = await medicament.medicament.findOne({ name:req.body.Name });
-       if (existingMedicament) {
-         return res.status(400).json({ message: "Medicament already exists" });
-       }
-
-      console.log(req.body)
-
-      const medicament = await medicamentsModel.medicament.create(req.body);
-      res.status(201).json({ medicament });
+        await medicament.create(req.body)
+      res.status(201).json(medicament);
     } catch (error) {
         res.status(400).json(error.message);
    }
 };
+
 export default {
     getAllMedicaments,
     getMedicamentById,
