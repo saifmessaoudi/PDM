@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema(
         height : {type: Number},
         weight : {type: Number},
         location: {type: String},
+        country:{type: String},
         favorites :{type: Array, default: []},
         isVerified: { type: Boolean, default: false },
         isBanned: { type: Boolean, default: false },
@@ -29,8 +30,6 @@ const userSchema = mongoose.Schema(
     { timestamps: true}
 ); 
 
-
 const User = mongoose.model("User", userSchema);
-
 
 export default { User };

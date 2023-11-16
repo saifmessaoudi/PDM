@@ -6,18 +6,9 @@ const medicamentSchema = mongoose.Schema(
         image : {type: String, default: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png"},
         type: { type: String, required: true },
         disponibilité:{ type: String, required: true },
-
-        
-
-
-        
-       
-
-
-       
+ 
     },
 
-    
 ); 
 const medicament = mongoose.model("medicament", medicamentSchema);
 export default {medicament}

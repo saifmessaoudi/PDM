@@ -9,9 +9,7 @@ const userRouter = Router();
  * @swagger
  * /user/clients:
  *   get:  
- *     summary: Get All Clients
- *     security:
- *       - bearerAuth: []
+ *     summary: Get All Clients 
  *     description: Get All Clients
  *     tags:
  *       - User
@@ -21,15 +19,13 @@ const userRouter = Router();
  *       401:
  *         description: Unauthorized, incorrect credentials
  */
-userRouter.get("/clients" , authenticated,usercontroller.getAllClients);
+userRouter.get("/clients" ,usercontroller.getAllClients);
 
 /**
  * @swagger
  * /user/medecins:
  *   get:  
  *     summary: Get All Medecins
- *     security:
- *       - bearerAuth: []
  *     description: Get All Medecins
  *     tags:
  *       - User
@@ -39,7 +35,7 @@ userRouter.get("/clients" , authenticated,usercontroller.getAllClients);
  *       401:
  *         description: Unauthorized, incorrect credentials
  */
-userRouter.get("/medecins" ,authenticated,usercontroller.getAllMedecins);
+userRouter.get("/medecins" ,usercontroller.getAllMedecins);
 
 
 /**
@@ -47,9 +43,9 @@ userRouter.get("/medecins" ,authenticated,usercontroller.getAllMedecins);
  * /user/get-current-user:
  *   get:  
  *     summary: Get authenticated user
- *     security:
- *       - bearerAuth: []
  *     description: Get authnticated user
+ *     security:
+ *       -BearerAuth: [] 
  *     tags:
  *       - User
  *     responses:
@@ -58,7 +54,7 @@ userRouter.get("/medecins" ,authenticated,usercontroller.getAllMedecins);
  *       401:
  *         description: Unauthorized, incorrect credentials
  */
-userRouter.get("/get-current-user" ,authenticated,usercontroller.getCurrentUser);
+userRouter.get("/get-current-user" ,usercontroller.getCurrentUser);
 
 /**
  * @swagger

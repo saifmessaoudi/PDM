@@ -10,8 +10,8 @@ router.get('/pharmacies/:id', pharmacyController.getPharmacieById);
 router.post('/pharmacies', pharmacyController.addPharmacie);
 router.put('/pharmacies/:id', pharmacyController.updatePharmacie);
 router.delete('/pharmacies/:id', pharmacyController.deletePharmacie);
-router.get('/pharmacies/search', pharmacyController.searchPharmaciesByName);
-router.get('/pharmacies/night', pharmacyController.getNightPharmacies);
-router.get('/pharmacies/day', pharmacyController.getDayPharmacies);
+router.get('/search/:name', pharmacyController.searchPharmaciesByName);
+router.get('/getPharmacieNight', pharmacyController.getNightPharmacies);
+router.get('/getPharmacieJour', pharmacyController.getDayPharmacies);
 
 export default router;
