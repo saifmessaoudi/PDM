@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
-import Pharmacie from "../models/pharmacie.model.js";
+import pharmacie from "../models/pharmacie.model.js"
 
 
 
 const getAllPharmacies = async (req, res) => {
     try {
-        const users = await Pharmacie.find().select("-password");
+        const users = await pharmacie.find().select("-password");
         if (users.length === 0) {
             return res.status(400).json( "No pharmacies found" );
         }
@@ -18,11 +18,11 @@ const getAllPharmacies = async (req, res) => {
 const getPharmacieById = async (req, res) => {
     const { id } = req.params;
     try {
-        const pharmacie = await Pharmacie.findById(id).select("-password");
+        const pharmacies = await pharmacie.findById(id).select("-password");
         if (pharmacie === null) {
             return res.status(400).json( "No pharmacy found" );
         }
-        res.status(200).json(user);
+        res.status(200).json(pharmacie);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
@@ -39,7 +39,7 @@ const updatePharmacie = async (req, res) => {
 
 const addPharmacie = async (req, res) => {
     try {
-        await Pharmacie.create(req.body)
+        await pharmacie.create(req.body)
       res.status(201).json(pharmacie);
     } catch (error) {
         res.status(400).json(error.message);
@@ -61,13 +61,14 @@ const deletePharmacie = async (req, res) => {
     }
 };
 
+
 const searchPharmaciesByName = async (req, res) => {
     const  name  = req.params.name;
     console.log(name);
     try {
         
        
-        const pharmacies = await Pharmacie.find({$or: [
+        const pharmacies = await pharmacie.find({$or: [
             { Name: { $regex: `^${name}`, $options: "i" } }
         ],}).select("-password");
 
@@ -84,7 +85,7 @@ const searchPharmaciesByName = async (req, res) => {
 
 const getNightPharmacies = async (req, res) => {
     try {
-        const nightPharmacies = await Pharmacie.find({ type: "nuit" }).select("-password");
+        const nightPharmacies = await pharmacie.find({ type: "Pharmacie de nuit" }).select("-password");
         
         if (nightPharmacies.length === 0) {
             return res.status(400).json("No night pharmacies found");
@@ -99,7 +100,7 @@ const getNightPharmacies = async (req, res) => {
 const getDayPharmacies = async (req, res) => {
     try {
         // Recherchez les pharmacies de jour en fonction de votre critère de filtrage (par exemple, le champ "dispo" indique la disponibilité de jour)
-        const dayPharmacies = await Pharmacie.find({ type: "jour" }).select("-password");
+        const dayPharmacies = await pharmacie.find({ type: "Pharmacie de jour" }).select("-password");
         
         if (dayPharmacies.length === 0) {
             return res.status(400).json("No day pharmacies found");
@@ -119,7 +120,5 @@ export default {
     searchPharmaciesByName,
     getNightPharmacies,
     getDayPharmacies
-
-
 };
 

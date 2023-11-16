@@ -1,18 +1,18 @@
 import mongoose from "mongoose";
 const pharmacieSchema = mongoose.Schema(
     {
-        Name: { type: String, required: false },
-        dispo: { type: String, required: false },
-        type: { type: String, required: false },
-        phone: { type: String, required: false,unique:false },
-        longtitude: { type: Number, required: false },
-        lantitude:{ type: Number, required: false },
-        email:{ type: String, required: false },
-       
+        Name: { type: String, required: true },
+        dispo: { type: String, required: true },
+        type: { type: String, required: true },
+        phone: { type: String, required: true,unique:false },
+        longtitude: { type: Number, required: true },
+        lantitude:{ type: Number, required: true },
+        email:{ type: String, required: true },
+  
     },
     {
         timestamps: true,
     }
 ); 
-const Pharmacie = mongoose.model("Pharmacie", pharmacieSchema);
-export default Pharmacie
+const pharmacie = mongoose.model("Pharmacie", pharmacieSchema);
+export default pharmacie
