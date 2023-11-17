@@ -8,7 +8,7 @@ const router = Router();
 router.get('/medicaments', medicamentController.getAllMedicaments);
 router.get('/medicaments/:id', medicamentController.getMedicamentById);
 router.post('/add', medicamentController.addMedicament);
-
+router.delete('/medicaments/:id', medicamentController.deleteMedicament);
 
 
 export default router;

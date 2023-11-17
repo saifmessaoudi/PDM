@@ -23,7 +23,7 @@ const deleteMedicament = async (req, res) => {
 
     try {
         // Supprimer la pharmacie avec l'ID spécifié
-        await medicamentsModel.findByIdAndRemove(id);
+        await medicament.findByIdAndRemove(id);
 
         res.status(200).json({ message: "medicament deleted successfully" });
     } catch (error) {
