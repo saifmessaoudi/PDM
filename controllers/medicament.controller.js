@@ -58,13 +58,41 @@ const addMedicament = async (req, res) => {
         res.status(400).json(error.message);
    }
 };
+const getDermatologique = async (req, res) => {
+    try {
+        const medicaments = await medicament.find({ type: "Dermatologique" }).select("-password");
+        
+        if (medicaments.length === 0) {
+            return res.status(400).json(" no Dermatologique");
+        }
+        
+        res.status(200).json(medicaments);
+    } catch (error) {
+        res.status(500).json({ message: "An error occurred while fetching Dermatologique", error: error.message });
+    }
+};
+const getBiologique= async (req, res) => {
+    try {
+        const medicaments = await medicament.find({ type: "Biologique" }).select("-password");
+        
+        if (medicaments.length === 0) {
+            return res.status(400).json(" no Biologique");
+        }
+        
+        res.status(200).json(medicaments);
+    } catch (error) {
+        res.status(500).json({ message: "An error occurred while fetching Biologique", error: error.message });
+    }
+};
 
 export default {
     getAllMedicaments,
     getMedicamentById,
     updateMedicament,
     addMedicament,
-    deleteMedicament
+    deleteMedicament,
+    getBiologique,
+    getDermatologique
    
 
 
