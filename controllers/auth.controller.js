@@ -59,21 +59,21 @@ const signIn = async (req, res) => {
 /*-----------------------------------------Forgot Password  Email Verification-----------------------------------------*/
 const forgotPassword = async (req, res) => {
   try {
-      const {email} = req.body;
-      const user = await User.findOne({ email: req.body.email });
+      const email = req.body.email;
+      const user = await User.findOne({ email: email });
       if(user === null){
           return res.status(400).json({message: "User with this email does not exist"});
       }
       const resetRandomCode = crypto.randomBytes(3).toString("hex");
       const updatedUser = { passwordResetToken: resetRandomCode};
-      await User.findOneAndUpdate({email: req.body.email}, updatedUser);
+      await User.findOneAndUpdate({email: email}, updatedUser);
   
       const subject = "Password Reset Code";
       const text = `Hello ${user.firstName} \n
       this is your password reset code \n
       ${resetRandomCode}`;
       sendEmail(email, subject, text);
-      res.status(200).json({message: "Password reset link has been sent to your email"});
+      res.status(200).json({message: "Password reset link has been sent to your email",resetCode : resetRandomCode});
   }catch(error){
     res.status(400).json(error.message);
   }
@@ -129,6 +129,24 @@ const resetPassword = async (req, res) => {
   }
 };
 
+//new resetPassword , based on email and password before hashing in body 
+const resetPassword2 = async (req, res) => {
+  try {
+        const email = req.body.email;
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body.password, salt);
+        const user = await User.findOne({email: email});
+        if (!user) {
+          return res.status(400).json({ message: "User does not exist" });
+        }
+        const updatedUser = { password: hashedPassword , passwordResetToken: null};
+        await User.findOneAndUpdate({email: email}, updatedUser); 
+        res.status(200).json({message: "Password reset successfully"});
+  }catch(error){
+    res.status(400).json(error.message);
+  }
+};
+
 const signInWithGoogle = async (req, res) => {
    const user = req.user;
    const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET, { expiresIn: "30m" });
@@ -145,6 +163,7 @@ export default {
   resendEmailVerification,
   verifEmail,
   resetPassword,
-  signInWithGoogle
+  signInWithGoogle,
+  resetPassword2
 };
 

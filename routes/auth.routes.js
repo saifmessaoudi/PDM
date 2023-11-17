@@ -114,7 +114,7 @@ authRouter.post("/send-email-verification",authenticated ,authcontroller.resendE
  *         description: User not found
  *
  */
-authRouter.post("/reset-password/:id", authcontroller.resetPassword);
+authRouter.post("/reset-password", authcontroller.resetPassword2);
 authRouter.get("/verify-email/:token",authenticated, authcontroller.verifEmail);
 
 authRouter.get(
