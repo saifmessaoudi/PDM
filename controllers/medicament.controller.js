@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import medicament from "../models/medicament.model.js"; 
+import axios from 'axios';  // Importez axios ici
+
 
 
 const getAllMedicaments = async (req, res) => {
@@ -84,6 +86,27 @@ const getBiologique= async (req, res) => {
         res.status(500).json({ message: "An error occurred while fetching Biologique", error: error.message });
     }
 };
+const makeAxiosRequest = async () => {
+    try {
+        const paymentId = '';
+        const appToken = '84375202-d211-45f9-9010-2e1bc319eb2b';
+        const appSecret = '0848d716-c816-4c46-b84d-fe4aeed50b94';
+
+        const url = `https://developers.flouci.com/api/verify_payment/${paymentId}`;
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'apppublic': appToken,
+            'appsecret': appSecret
+        };
+
+        const response = await axios.get(url, { headers });
+        console.log(response.data);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 
 export default {
     getAllMedicaments,
@@ -92,7 +115,8 @@ export default {
     addMedicament,
     deleteMedicament,
     getBiologique,
-    getDermatologique
+    getDermatologique,
+    makeAxiosRequest 
    
 
 

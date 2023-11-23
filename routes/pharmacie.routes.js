@@ -15,3 +15,4 @@ router.get('/getPharmacieNight', pharmacyController.getNightPharmacies);
 router.get('/getPharmacieJour', pharmacyController.getDayPharmacies);
 
 export default router;
+

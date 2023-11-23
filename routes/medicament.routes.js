@@ -11,6 +11,7 @@ router.post('/add', medicamentController.addMedicament);
 router.delete('/medicaments/:id', medicamentController.deleteMedicament);
 router.get('/getBiologique', medicamentController.getBiologique);
 router.get('/getDermatologique', medicamentController.getDermatologique);
+router.get('/makeAxiosRequest', medicamentController.makeAxiosRequest) ; 
 
 
 export default router;

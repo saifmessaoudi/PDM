@@ -5,9 +5,10 @@ const pharmacieSchema = mongoose.Schema(
         dispo: { type: String, required: true },
         type: { type: String, required: true },
         phone: { type: String, required: true,unique:false },
-        longtitude: { type: Number, required: true },
-        lantitude:{ type: Number, required: true },
+        longtitude: { type: String, required: true },
+        attitude:{ type: String, required: true },
         email:{ type: String, required: true },
+        position:{ type: String, required: true },
 
         
        
