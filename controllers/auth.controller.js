@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import sendEmail from "../utils/Mailer.js";
 import crypto from "crypto";
+import {OAuth2Client}  from "google-auth-library";
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const User = usermodel.User;
 
@@ -147,12 +149,36 @@ const resetPassword2 = async (req, res) => {
   }
 };
 
-const signInWithGoogle = async (req, res) => {
-   const user = req.user;
-   const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET, { expiresIn: "30m" });
-   res.status(200).json({token}); 
+  const signInWithGoogle = async (req, res) => {
+    const user = req.user;
+    const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET, { expiresIn: "30m" });
+    res.status(200).json({token}); 
 
-};
+  };
+
+const verifyUserWithGoogle = async (req, res) => {
+  const googleIdToken = req.body.googleIdToken;
+   try{
+    const ticket = await client.verifyIdToken({
+      idToken: googleIdToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+   });
+    const payload = ticket.getPayload();
+    const email = payload.email;
+   
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(400).json({ message: "Please sign up first !" });
+    }
+    if (user.isBanned === true) {
+      return res.status(400).json({ message: "Your account is banned ! Please contact the support." });
+    }
+    const token = jwt.sign({ userId: user._id , role: user.role }, process.env.JWT_SECRET, { expiresIn: "30m" });
+    res.status(200).json({token});
+}catch (error) {
+  res.status(400).json(error.message);
+}
+}
 
 
 /*-------------------------------------------Export-------------------------------------------*/
@@ -164,6 +190,7 @@ export default {
   verifEmail,
   resetPassword,
   signInWithGoogle,
-  resetPassword2
+  resetPassword2,
+  verifyUserWithGoogle
 };
 

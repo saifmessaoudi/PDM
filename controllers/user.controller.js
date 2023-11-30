@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 import usermodel from "../models/user.model.js";
+import paymentModel from "../models/payment.model.js";
+import axios from "axios";
+import dotenv from "dotenv";
 
 const User = usermodel.User;
 
@@ -11,7 +14,7 @@ const getCurrentUser = async (req, res) => {
        if (!req.header("Authorization")) return res.status(401).json({ message: "Unauthorized" });
         const token = req.header("Authorization").split(" ")[1];
         const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findById(decodedToken.userId).select("-password ");
+        const user = await User.findById(decodedToken.userId).select("-password -createdAt -updatedAt -__v");
         if (!user) return res.status(404).json({ message: "User not found" });
         res.status(200).json(user);
     } catch (error) {
@@ -109,9 +112,9 @@ const searchUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { firstName, lastName, email, phone } = req.body;
+    const { firstName, lastName, phone ,email, location } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No user with id: ${id}`);
-    const updatedUser = { firstName, lastName, email, phone };
+    const updatedUser = { firstName, lastName, phone,email ,location};
     await User.findByIdAndUpdate(id, updatedUser, { new: true });
     res.json(updatedUser);
 };
@@ -121,10 +124,8 @@ const updateUser = async (req, res) => {
 
 const addRemoveFavorite = async (req, res) => {
     try {
-        const token = req.header("Authorization").split(" ")[1];
-        const decodedToken = await jwt.verify(token, process.env.JWT_SECRET);
-        console.log(decodedToken);
-        const currentUserId = decodedToken.userId;
+       
+        const currentUserId = req.params.userId;
         const otherUserId = req.params.otherUserId;
         if (currentUserId === otherUserId) return res.status(400).json({ message: "You can't add yourself to favorites" });
         const currentUser = await User.findById(currentUserId);
@@ -134,11 +135,11 @@ const addRemoveFavorite = async (req, res) => {
         if (isFavorite) {
             currentUser.favorites = currentUser.favorites.filter((id) => id !== otherUserId);
             await currentUser.save();
-            return res.status(200).json("User removed from favorites");
+            return res.status(200).json({message : "User removed from favorites"});
         } else {
             currentUser.favorites.push(otherUserId);
             await currentUser.save();
-            res.status(200).json("User added to favorites");
+            res.status(200).json({message : "User added to favorites"});
         }
     }catch(error){
         res.status(404).json({ message: error.message });
@@ -165,6 +166,69 @@ const getFavorites = async (req, res) => {
     }
 };
 
+const Payment = async (req, res) => {
+    const url = "https://developers.flouci.com/api/generate_payment";
+    const payload = {
+      app_token: "5f434644-7f1a-4e02-a6c4-6f317a3fb668",
+      app_secret: process.env.FLOUCI_SECRET,
+      amount: req.body.amount * 1000,
+      accept_card: "true",
+      session_timeout_secs: 1200,
+      success_link: "https://developers.flouci.com/api/verify_payment",
+      fail_link: "http://0.0.0.0:3000/user",
+      developer_tracking_id: "3d6c3855-88b9-481f-9c00-43c8b8745f80",
+    };
+  
+    try {
+      const result = await axios.post(url, payload);
+      const payment = new paymentModel({
+        user: req.body.userId,
+        balanace: req.body.amount,
+        payment_id: result.data.result.payment_id,
+        state: "in progress",
+      });
+      await payment.save();
+      res.send(result.data);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("An error occurred");
+    }
+  };
+
+  const Verify = async (req, res) => {
+    const id_payment = req.params.id;
+  
+    try {
+      const result = await axios.get(
+        `https://developers.flouci.com/api/verify_payment/${id_payment}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            apppublic: "5f434644-7f1a-4e02-a6c4-6f317a3fb668",
+            appsecret: process.env.FLOUCI_SECRET,
+          },
+        }
+      );
+
+      const payment = await paymentModel.findOne({
+        user: req.body.userId,
+        payment_id: id_payment,
+      });
+  
+      
+      
+          payment.state = "success";
+          await payment.save();
+        
+      
+  
+      res.json(result.data);
+    } catch (err) {
+      console.log(err);
+      res.status(500).send("An error occurred");
+    }
+  };
+
 
 export default {
     getAllClients,
@@ -176,6 +240,8 @@ export default {
     addRemoveFavorite,
     getFavorites,
     searchUser,
+    Payment,
+    Verify,
     getCurrentUser
 };
 

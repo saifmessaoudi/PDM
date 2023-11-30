@@ -14,7 +14,6 @@ import cors from "cors";
 import reclamationRouter  from "./routes/reclamation.routes.js";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swaggerDefinition.js";
-import passport from "passport";
 import "./config/passportConfig.js";
 import session from "express-session";
 import magazineRouter from "./routes/magazine.routes.js";
@@ -22,8 +21,8 @@ import magazineRouter from "./routes/magazine.routes.js";
 
 dotenv.config();
 
-const hostname = process.env.HOSTNAME ;
-const port = process.env.PORT ;
+const port = process.env.PORT;
+const host = "0.0.0.0";
 
 const app = express();
 app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
@@ -48,8 +47,8 @@ app.use("/magazine",magazineRouter);
 app.use("/reclamation",reclamationRouter);
 
 
-app.listen(port, hostname,() => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port,host,() => {
+    console.log(`Server running at http://${host}:${port}/`);
 }
 );
 

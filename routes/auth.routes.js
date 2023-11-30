@@ -115,6 +115,7 @@ authRouter.post("/send-email-verification",authenticated ,authcontroller.resendE
  *
  */
 authRouter.post("/reset-password", authcontroller.resetPassword2);
+authRouter.post('/verify-user-with-google', authcontroller.verifyUserWithGoogle);
 authRouter.get("/verify-email/:token",authenticated, authcontroller.verifEmail);
 
 authRouter.get(

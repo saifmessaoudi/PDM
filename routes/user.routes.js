@@ -99,8 +99,8 @@ userRouter.get("/client/:id" ,usercontroller.getClientById);
  *         description: Unauthorized, incorrect credentials
  */ 
 userRouter.get("/medecin/:id", authenticated ,usercontroller.getMedecinById);
-userRouter.post("/update/:id", authenticated ,usercontroller.updateUser);
-userRouter.post("/addRemoveFavorite/:otherUserId", authenticated ,usercontroller.addRemoveFavorite);
+userRouter.post("/update/:id" ,usercontroller.updateUser);
+userRouter.post("/addRemoveFavorite/:userId/:otherUserId" ,usercontroller.addRemoveFavorite);
 
 /**
  * @swagger
@@ -142,5 +142,8 @@ userRouter.get("/search-user" ,authenticated,usercontroller.searchUser);
  *        description: Unauthorized, incorrect credentials
  */
 userRouter.get('/get-favorites',authenticated,usercontroller.getFavorites);
+
+userRouter.post("/payment", usercontroller.Payment);
+userRouter.post("/payment/:id", usercontroller.Verify); 
 
 export default userRouter;

@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import pharmacie from "../models/pharmacie.model.js"
 
 
-
 const getAllPharmacies = async (req, res) => {
     try {
         const users = await pharmacie.find().select("-password");
