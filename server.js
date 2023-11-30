@@ -22,7 +22,7 @@ import magazineRouter from "./routes/magazine.routes.js";
 dotenv.config();
 
 const port = process.env.PORT;
-const host = "0.0.0.0";
+const host = process.env.HOSTNAME;
 
 const app = express();
 app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: false }));
