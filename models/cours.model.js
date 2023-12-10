@@ -7,6 +7,7 @@ const coursSchema = new mongoose.Schema({
   format: { type: String, required: true },
   formateur: { type: String, required: true },
   exercices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Exercice' }]
+
 });
 
 const Cours = mongoose.model('cours', coursSchema);

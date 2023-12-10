@@ -4,7 +4,6 @@ import connectDB from "./config/connectDB.js";
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import adminRouter from "./routes/admin.routes.js";
-
 import  exercicesrouter from "./routes/exercices.routes.js"
 import  coursrouter from "./routes/cours.routes.js"
 
@@ -32,7 +31,7 @@ app.use("/cours", coursrouter)
 
 
 
-app.listen(port, hostname,() => {
+app.listen(port,() => {
     console.log(`Server running at http://${hostname}:${port}/`);
 }
 );

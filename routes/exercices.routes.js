@@ -4,10 +4,10 @@ import exerciceController from "../controllers/exerciceController.js";
 const exercicesrouter = Router();
 
 // Routes pour les exercices
-exercicesrouter.post('/exercices', exerciceController.createExercice);
-exercicesrouter.get('/exercices', exerciceController.getAllExercices);
-exercicesrouter.get('/exercices/:id', exerciceController.getExerciceById);
-exercicesrouter.post('/exercices/:id', exerciceController.updateExercice);
-exercicesrouter.delete('/exercices/:id', exerciceController.deleteExercice);
+exercicesrouter.post('/add-exercice', exerciceController.createExercice);
+exercicesrouter.get('/list-exercice', exerciceController.getAllExercices);
+exercicesrouter.get('/one-exercice/:id', exerciceController.getExerciceById);
+exercicesrouter.post('/edit-exercice/:id', exerciceController.updateExercice);
+exercicesrouter.delete('/delete-exercice/:id', exerciceController.deleteExercice);
 
 export default  exercicesrouter;

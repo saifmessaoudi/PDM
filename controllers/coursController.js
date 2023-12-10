@@ -25,7 +25,7 @@ const createCours = async (req, res) => {
 // Récupérer tous les cours
 const getAllCours = async (req, res) => {
   try {
-    const cours = await Cours.find().populate('exercices');
+    const cours = await Cours.find();
 
     res.json(cours);
   } catch (error) {
