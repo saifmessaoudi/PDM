@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import  mongoose from "mongoose";
 
 const coursSchema = new mongoose.Schema({
   theme: { type: String, required: true },

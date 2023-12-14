@@ -9,6 +9,6 @@ const exerciceSchema = new mongoose.Schema({
   date: { type: Date, required: true }
 });
 
-const Exercice = mongoose.model('exercice', exerciceSchema);
+const Exercice = mongoose.model('Exercice', exerciceSchema);
 
 export default  Exercice ;

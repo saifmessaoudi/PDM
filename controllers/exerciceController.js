@@ -1,27 +1,67 @@
 import Exercice from "../models/exercice.model.js";
-
+import Cours from "../models/cours.model.js";
 // Créer un nouvel exercice
+// const createExercice = async (req, res) => {
+//   try {
+//     const { nom, description, duree, niveau_difficulte, image, date } = req.body;
+
+//     const nouvelExercice = new Exercice({
+//       nom,
+//       description,
+//       duree,
+//       niveau_difficulte,
+//       image,
+//       date
+//     });
+
+//     const exerciceCree = await nouvelExercice.save();
+
+//     res.status(201).json(exerciceCree);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Erreur lors de la creation de lexercice' });
+//   }
+// };
+
 const createExercice = async (req, res) => {
   try {
-    const { nom, description, duree, niveau_difficulte, image, date } = req.body;
+    const {
+      nom,
+      description,
+      duree,
+      niveau_difficulte,
+      image,
+      date,
+      courseId,
+    } = req.body;
 
+    // Create a new exercise
     const nouvelExercice = new Exercice({
       nom,
       description,
       duree,
       niveau_difficulte,
       image,
-      date
+      date,
     });
 
+    // Save the exercise
     const exerciceCree = await nouvelExercice.save();
+
+    // Find the course by courseId and push the exercise into the exercices array
+    const cours = await Cours.findById(courseId);
+    if (!cours) {
+      return res.status(404).json({ error: "Course not found" });
+    }
+
+    cours.exercices.push(exerciceCree._id);
+    await cours.save();
 
     res.status(201).json(exerciceCree);
   } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la creation de lexercice' });
+    console.error(error);
+    res.status(500).json({ error: "Erreur lors de la creation de l'exercice" });
   }
 };
-
 // Récupérer tous les exercices
 const getAllExercices = async (req, res) => {
   try {

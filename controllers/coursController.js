@@ -4,14 +4,15 @@ import Cours from "../models/cours.model.js";
 // Créer un nouveau cours
 const createCours = async (req, res) => {
   try {
-    const { theme, objectifs, duree, format, formateur } = req.body;
+    const { theme, objectifs, duree, format, formateur, exercices } = req.body;
 
     const nouveauCours = new Cours({
       theme,
       objectifs,
       duree,
       format,
-      formateur
+      formateur,
+      exercices,
     });
 
     const coursCree = await nouveauCours.save();
@@ -25,9 +26,11 @@ const createCours = async (req, res) => {
 // Récupérer tous les cours
 const getAllCours = async (req, res) => {
   try {
-    const cours = await Cours.find();
+    const cours = await Cours.find().populate('exercices');
 
-    res.json(cours);
+    console.log(cours);
+
+    res.status(200).json(cours);
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la recuperation des cours' });
   }
